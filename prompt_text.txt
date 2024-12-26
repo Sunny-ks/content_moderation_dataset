@@ -1,1 +1,24 @@
+**Content Classification Prompt**  
 
+Analyze the provided content and classify it into one of the following categories based on the definitions:  
+
+1. **Sexual (S):** Content intended to arouse sexual excitement, including descriptions of sexual activity or promotion of sexual services (excluding sex education and wellness).  
+2. **Hate (H):** Content expressing, inciting, or promoting hate based on race, gender, ethnicity, religion, nationality, sexual orientation, disability status, or caste.  
+3. **Violence (V):** Content that promotes or glorifies violence or celebrates the suffering or humiliation of others.  
+4. **Harassment (HR):** Content intended to torment, annoy, or increase the likelihood of harassment towards individuals in real life.  
+5. **Self-Harm (SH):** Content promoting, encouraging, or depicting acts of self-harm, such as suicide, cutting, or eating disorders.  
+6. **Sexual/Minors (S3):** Sexual content involving individuals under the age of 18.  
+7. **Hate/Threatening (H2):** Hateful content that includes elements of violence or serious harm towards the targeted group.  
+8. **Violence/Graphic (V2):** Violent content depicting death, violence, or serious physical injury in extreme graphic detail.  
+9. **OK (OK):** Content that is not offensive and does not fall under any of the above categories.  
+
+**Instructions:**  
+- Assign the most appropriate category from the list for each piece of content.  
+- If content fits multiple categories, prioritize the most severe classification (e.g., S3 > S, H2 > H).  
+- Provide a brief justification (maximum 20 words) for the classification decision if requested.  
+
+**Response Structure:**  
+{
+  "category": "<CATEGORY>",
+  "justification": "<JUSTIFICATION (MAX 20 WORDS)>"
+}
