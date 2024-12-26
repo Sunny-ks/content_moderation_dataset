@@ -1,23 +1,101 @@
-**Content Classification Prompt**  
+# Define the text of the prompt
+prompt_text = """
+Content Classification Prompt
 
-Analyze the provided content and classify it into one of the following categories based on the definitions:  
+**Objective:**  
+Classify the provided content into one of the defined categories based on its characteristics and the detailed descriptions below.
 
-1. **Sexual (S):** Content intended to arouse sexual excitement, including descriptions of sexual activity or promotion of sexual services (excluding sex education and wellness).  
-2. **Hate (H):** Content expressing, inciting, or promoting hate based on race, gender, ethnicity, religion, nationality, sexual orientation, disability status, or caste.  
-3. **Violence (V):** Content that promotes or glorifies violence or celebrates the suffering or humiliation of others.  
-4. **Harassment (HR):** Content intended to torment, annoy, or increase the likelihood of harassment towards individuals in real life.  
-5. **Self-Harm (SH):** Content promoting, encouraging, or depicting acts of self-harm, such as suicide, cutting, or eating disorders.  
-6. **Sexual/Minors (S3):** Sexual content involving individuals under the age of 18.  
-7. **Hate/Threatening (H2):** Hateful content that includes elements of violence or serious harm towards the targeted group.  
-8. **Violence/Graphic (V2):** Violent content depicting death, violence, or serious physical injury in extreme graphic detail.  
-9. **OK (OK):** Content that is not offensive and does not fall under any of the above categories.  
+**Categories and Definitions:**  
+
+1. **Sexual (S):**  
+   - **Definition:** Content intended to arouse sexual excitement, including explicit descriptions of sexual activity, nudity, or promotion of sexual services (excluding sex education and wellness).  
+   - **Clarifications:**  
+     - Includes explicit descriptions of sexual acts or materials designed to arouse sexual excitement.  
+     - Excludes content focused on sex education, wellness, or health-related discussions.  
+   - **Examples:**  
+     - "Detailed description of sexual acts."  
+     - "Promotion of escort services or pornography."  
+
+2. **Hate (H):**  
+   - **Definition:** Content expressing, inciting, or promoting hatred, discrimination, or demeaning language based on characteristics such as race, gender, ethnicity, religion, nationality, sexual orientation, disability status, or caste.  
+   - **Clarifications:**  
+     - Includes slurs, demeaning language, or stereotypes targeting a specific group.  
+     - Can involve explicit calls to exclude or degrade individuals or communities.  
+   - **Examples:**  
+     - "Posts that demean a specific ethnic group."  
+     - "Slurs or statements implying inferiority of a group."  
+
+3. **Violence (V):**  
+   - **Definition:** Content that promotes, glorifies, or celebrates acts of violence, physical harm, or suffering.  
+   - **Clarifications:**  
+     - Includes statements encouraging violence, physical harm, or any content that glorifies suffering.  
+     - Excludes discussions or reports on violence for informational purposes without endorsement.  
+   - **Examples:**  
+     - "Encouragement of physical harm or assault."  
+     - "Celebrating violent actions such as shootings or bombings."  
+
+4. **Harassment (HR):**  
+   - **Definition:** Content used to torment, annoy, or increase the likelihood of harassment towards specific individuals or groups. This includes personal attacks, threats, or public shaming.  
+   - **Clarifications:**  
+     - Includes direct insults, personal threats, or coordinated campaigns to harm an individual’s reputation or safety.  
+     - Excludes neutral criticism or feedback that does not involve personal attacks.  
+   - **Examples:**  
+     - "Direct insults targeted at an individual."  
+     - "Sharing someone's personal information with malicious intent (doxxing)."  
+
+5. **Self-Harm (SH):**  
+   - **Definition:** Content that promotes, encourages, or depicts self-harming behaviors, such as suicide, cutting, or eating disorders, often in a glorified or instructional manner.  
+   - **Clarifications:**  
+     - Includes romanticizing or glorifying self-harm practices or sharing instructions on harmful behaviors.  
+     - Excludes content intended to provide support or resources for those struggling with self-harm.  
+   - **Examples:**  
+     - "Guidelines or encouragement for self-harming behaviors."  
+     - "Statements romanticizing eating disorders or suicide."  
+
+6. **Sexual/Minors (S3):**  
+   - **Definition:** Sexual content involving, implying, or referencing individuals under the age of 18, including any explicit or suggestive material.  
+   - **Clarifications:**  
+     - Includes depictions, discussions, or any reference to minors in a sexualized context, even if not explicit.  
+     - Excludes discussions about child safety, welfare, or protection from exploitation.  
+   - **Examples:**  
+     - "Sexualized depictions of minors in text, image, or video."  
+     - "Explicit discussions involving underage individuals."  
+
+7. **Hate/Threatening (H2):**  
+   - **Definition:** Content that combines hateful language with threats of violence or serious harm directed at a specific individual or group.  
+   - **Clarifications:**  
+     - Includes explicit threats of harm against a group or individual paired with hateful language.  
+     - Excludes non-violent expressions of disapproval or disagreement without explicit hate or threats.  
+   - **Examples:**  
+     - "Threats of harm combined with hate speech, such as 'Kill all [specific group].'"  
+     - "Calls for violent action against a religious or racial group."  
+
+8. **Violence/Graphic (V2):**  
+   - **Definition:** Content containing extreme and graphic depictions of death, violence, or serious physical injury in vivid detail, intended to shock or disturb.  
+   - **Clarifications:**  
+     - Includes highly detailed and explicit visual or textual depictions of violence.  
+     - Excludes discussions of violent incidents in a neutral or informative tone.  
+   - **Examples:**  
+     - "Videos or images showing decapitation, torture, or other extreme violence."  
+     - "Descriptions of graphic violence intended to glorify or shock."  
+
+9. **OK (OK):**  
+   - **Definition:** Content that is non-offensive and does not fall into any of the above categories. This includes neutral, informative, or innocuous material.  
+   - **Clarifications:**  
+     - Includes safe, non-provocative discussions on neutral topics, such as "An article discussing gardening techniques."  
+     - Content that is purely educational or innocuous, such as "A post about holiday destinations."  
+   - **Examples:**  
+     - "A detailed guide to cooking recipes."  
+     - "A post sharing tips for home workouts."
 
 **Instructions:**  
 - Assign the most appropriate category from the list for each piece of content.  
 - If content fits multiple categories, prioritize the most severe classification (e.g., S3 > S, H2 > H).  
-- Provide a brief justification (maximum 20 words) for the classification decision if requested.  
+- In case of ambiguity, refer to the closest matching definition.  
+- Provide a brief justification (maximum 20 words) for the classification decision if requested.
 
 **Response Structure:**  
+```json
 {
   "category": "<CATEGORY>",
   "justification": "<JUSTIFICATION (MAX 20 WORDS)>"
