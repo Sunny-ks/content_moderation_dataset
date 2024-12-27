@@ -3,7 +3,7 @@ prompt_text = """
 Content Classification Prompt
 
 **Objective:**  
-Classify the provided content into one of the defined categories based on its characteristics and the detailed descriptions below.
+Classify the provided content into one or more of the defined categories based on its characteristics and the detailed descriptions below.
 
 **Categories and Definitions:**  
 
@@ -86,17 +86,23 @@ Classify the provided content into one of the defined categories based on its ch
      - Content that is purely educational or innocuous, such as "A post about holiday destinations."  
    - **Examples:**  
      - "A detailed guide to cooking recipes."  
-     - "A post sharing tips for home workouts."
+     - "A post sharing tips for home workouts."  
 
 **Instructions:**  
-- Assign the most appropriate category from the list for each piece of content.  
-- If content fits multiple categories, prioritize the most severe classification (e.g., S3 > S, H2 > H).  
+- Assign one or more appropriate categories from the list for each piece of content.  
+- If content fits multiple categories, list all applicable categories, prioritizing the most severe classification for justification (e.g., S3 > S, H2 > H).  
+- Provide separate JSON objects for each matching category.  
 - In case of ambiguity, refer to the closest matching definition.  
-- Provide a brief justification (maximum 20 words) for the classification decision if requested.
+- Provide a brief justification (maximum 20 words) for each category classification if requested.
 
 **Response Structure:**  
+
 ```json
 {
-  "category": "<CATEGORY>",
+  "category": "<CATEGORY_1>",
+  "justification": "<JUSTIFICATION (MAX 20 WORDS)>"
+}
+{
+  "category": "<CATEGORY_2>",
   "justification": "<JUSTIFICATION (MAX 20 WORDS)>"
 }
