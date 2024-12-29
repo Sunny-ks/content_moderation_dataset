@@ -1,0 +1,51 @@
+AQLM quantization process:
+
+---
+### **Using Your Dataset Format with AQLM**
+
+#### **1. Dataset Format Validation**
+Ensure the dataset is structured as follows:
+```json
+{"messages": ["a", "b"]}
+{"messages": ["x", "y", "z"]}
+{"messages": ["p", "q"]}
+```
+Where:
+- Each JSON object is on a new line.
+- The `messages` key contains an array of strings representing turns in a conversation.
+
+#### **2. Preparing the Dataset for AQLM**
+AQLM expects a standard text-based dataset. You can preprocess your JSONL dataset into plain text by concatenating the `messages` for each JSON object into a single string.
+
+##### Example Preprocessing Script (Python):
+```python
+import json
+
+input_file = "dataset.jsonl"
+output_file = "processed_dataset.txt"
+
+with open(input_file, "r") as infile, open(output_file, "w") as outfile:
+    for line in infile:
+        data = json.loads(line)
+        messages = data.get("messages", [])
+        # Concatenate messages with spaces or newlines (choose based on model training)
+        conversation = " ".join(messages)
+        outfile.write(conversation + "\n")
+
+print(f"Processed dataset saved to {output_file}")
+```
+
+This script will create a `processed_dataset.txt` file where each conversation is represented as a single line.
+
+##### Example Output:
+```plaintext
+a b
+x y z
+p q
+```
+
+#### **3. Using the Preprocessed Dataset**
+Set `DATASET_PATH` to point to the processed dataset:
+```bash
+export DATASET_PATH=/path/to/processed_dataset.txt
+```
