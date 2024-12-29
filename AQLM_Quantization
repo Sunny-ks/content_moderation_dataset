@@ -132,4 +132,57 @@ python ./AQLM/main.py $MODEL_PATH $DATASET_PATH \
 
 - If Weights & Biases is enabled, logs and metrics will be available under the project `AQLM_QUANTIZATION` with the name `Mistral7B_AQLM`.
 
+
+import torch
+from transformers import AutoTokenizer
+
+# Load the tokenizer
+model_id = "mistralai/Mistral-7B-Instruct-v0.3"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+# Example samples
+samples = [
+    {
+        "system": "You are a helpful assistant.",
+        "user": "What is the weather like in Paris?",
+        "response": "The weather in Paris is sunny and warm."
+    },
+    {
+        "system": "You are a knowledgeable assistant.",
+        "user": "Explain quantum computing in simple terms.",
+        "response": "Quantum computing is a type of computing that uses qubits to process information in ways classical computers cannot."
+    }
+]
+
+# Function to format and tokenize the responses
+def format_and_tokenize_responses(samples, tokenizer, max_length=2048):
+    tokenized_responses = []
+    for sample in samples:
+        # Format the prompt in Mistral v3 format
+        formatted_prompt = (
+            f"<s>[INST] {sample['system']}\n\n{sample['user']} [/INST] {sample['response']}</s>"
+        )
+        # Tokenize the formatted prompt
+        tokenized = tokenizer(
+            formatted_prompt,
+            max_length=max_length,
+            truncation=True,
+            padding="max_length",
+            return_tensors="pt"
+        )
+        # Append only the tokenized response
+        tokenized_responses.append(tokenized["input_ids"])
+    
+    # Stack all tokenized responses into a tensor
+    return torch.stack(tokenized_responses)
+
+# Tokenize the responses
+tokenized_responses = format_and_tokenize_responses(samples, tokenizer)
+
+# Save the tokenized responses to a .pt file
+output_file = "tokenized_responses.pt"
+torch.save(tokenized_responses, output_file)
+print(f"Tokenized responses saved to {output_file}")
+
+
 Let me know if you need any additional assistance!
