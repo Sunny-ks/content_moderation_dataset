@@ -1,0 +1,45 @@
+To ensure the proper naming and use of your models during the SqueezeLLM quantization process, here’s how you can map the steps to the specified model names:
+
+### **Model Names**
+- **Original Fine-Tuned Model:** `research_outputs_merged`
+- **Quantized 4-bit Model:** `research_outputs_squeezeLLM`
+
+
+### **Steps with Model Names**
+
+#### **1. Start with the Original Model**
+   Your starting point is `research_outputs_merged`, which is your fine-tuned Mistral model.
+
+#### **2. Compute Gradients**
+   Replace the weights with gradient squares for sensitivity:
+   ```bash
+   python compute_gradients.py --model research_outputs_merged --output research_outputs_gradients
+   ```
+
+#### **3. Chunk Model Weights and Gradients**
+   Chunk the original and gradient checkpoints:
+   ```bash
+   python chunk_models.py --model research_outputs_merged --output research_outputs_chunks --model_type llama
+   python chunk_models.py --model research_outputs_gradients --output research_outputs_gradient_chunks --model_type llama
+   ```
+
+#### **4. Perform K-Means Clustering (4-bit Quantization)**
+   Generate the look-up table (LUT) for quantization:
+   ```bash
+   python nuq.py --bit 4 --model_type llama --model research_outputs_chunks --gradient research_outputs_gradient_chunks --output research_outputs_LUT
+   ```
+
+#### **5. Pack the Quantized Model**
+   - For **dense-only quantization**:
+     ```bash
+     python pack.py --model research_outputs_merged --wbits 4 --folder research_outputs_LUT --save research_outputs_squeezeLLM
+     ```
+   - For **Dense-and-Sparse quantization** (if applicable):
+     ```bash
+     python pack.py --model research_outputs_merged --wbits 4 --folder research_outputs_LUT --save research_outputs_squeezeLLM --include_sparse --balance
+     ```
+
+
+### Final Output
+- The packed 4-bit quantized model is named: `research_outputs_squeezeLLM`. 
+- It is ready for inference and can leverage the quantization optimizations. 
