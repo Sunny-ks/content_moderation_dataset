@@ -185,4 +185,11 @@ torch.save(tokenized_responses, output_file)
 print(f"Tokenized responses saved to {output_file}")
 
 
-Let me know if you need any additional assistance!
+python convert_to_hf.py \
+    mistralai/Mistral-7B-Instruct-v0.3 \
+    /path/to/aqlm_quantized_checkpoint \
+    /path/to/huggingface_compatible_model \
+    --save_safetensors \
+    --trust_remote_code \
+    --load_model \
+    --save_tokenizer
