@@ -4,7 +4,11 @@ from azure.storage.blob import BlobServiceClient
 connection_string = "Your_Azure_Storage_Connection_String"
 container_name = "your-container-name"
 blob_name = "your-blob-name"
-download_file_path = "path/to/save/the/downloaded/file"
+
+# Define the folder and the full file path
+download_folder = "./models"
+os.makedirs(download_folder, exist_ok=True)  # Ensure the folder exists
+download_file_path = os.path.join(download_folder, blob_name)  # Full file path with the blob name
 
 try:
     # Create a BlobServiceClient using the connection string
