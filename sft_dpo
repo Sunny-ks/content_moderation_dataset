@@ -1,0 +1,24 @@
+Supervised Fine-Tuning (SFT)
+Overview:
+Supervised Fine-Tuning (SFT) is a method used to train a pre-trained model on a labeled dataset for specific tasks. It involves adapting a model’s general-purpose knowledge to the requirements of a new task using example input-output pairs.
+
+Working Process:
+
+Prepare a labeled dataset containing inputs and their corresponding outputs (e.g., questions and answers, text and summaries).
+Fine-tune the pre-trained model using this dataset to adjust its parameters for the specific task.
+Evaluate the model's performance and iteratively refine it based on task-specific requirements.
+
+
+Direct Preference Optimization (DPO)
+Overview:
+Direct Preference Optimization (DPO) is a training technique designed to align a model's outputs with human preferences. Unlike traditional reinforcement learning, DPO avoids the complexities of reward modeling and directly optimizes a model based on pairwise preference data.
+
+Working Process:
+
+Preference Data: Collect pairwise comparisons of outputs (e.g., given an input, one output is preferred over another).
+Scoring Function: The model learns a scoring function that assigns higher scores to preferred outputs over less preferred ones.
+Optimization Objective: The training process uses a loss function that reflects the likelihood of preferred outputs being ranked higher. This loss function adjusts the model parameters to prioritize generating outputs aligned with the provided preferences.
+Gradient Updates: Gradients guide the model’s parameters to improve alignment, refining the scoring mechanism to increasingly favor preferred outputs during training.
+
+
+
