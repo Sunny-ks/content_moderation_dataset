@@ -21,4 +21,7 @@ Optimization Objective: The training process uses a loss function that reflects 
 Gradient Updates: Gradients guide the model’s parameters to improve alignment, refining the scoring mechanism to increasingly favor preferred outputs during training.
 
 
+The objective of this experimentation is to determine if we can enhance the model's understanding of different gaming genres for the Mistral 7-billion-parameter models, specifically improving knowledge in one particular genre while maintaining existing knowledge. For this proof of concept, we will employ techniques such as distilled supervised fine-tuning and Direct Preference Optimization.
+
+
 
